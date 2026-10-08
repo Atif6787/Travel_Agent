@@ -1,4 +1,4 @@
-import json
+﻿import json
 from pathlib import Path
 
 
@@ -15,7 +15,7 @@ def get_session_file(session_id: str) -> Path:
 def save_session(session_id: str, data: dict):
     file_path = get_session_file(session_id)
 
-    with open(file_path, "w", encoding="utf-8") as file:
+    with open(file_path, "w", encoding="utf-8-sig") as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
 
 
@@ -25,7 +25,7 @@ def load_session(session_id: str) -> dict:
     if not file_path.exists():
         return {}
 
-    with open(file_path, "r", encoding="utf-8") as file:
+    with open(file_path, "r", encoding="utf-8-sig") as file:
         return json.load(file)
 
 
@@ -47,14 +47,14 @@ def save_user_session(user_id: str, session_id: str):
     """Connect a user to their session ID."""
 
     if USER_MAP_FILE.exists():
-        with open(USER_MAP_FILE, "r", encoding="utf-8") as file:
+        with open(USER_MAP_FILE, "r", encoding="utf-8-sig") as file:
             users = json.load(file)
     else:
         users = {}
 
     users[user_id] = session_id
 
-    with open(USER_MAP_FILE, "w", encoding="utf-8") as file:
+    with open(USER_MAP_FILE, "w", encoding="utf-8-sig") as file:
         json.dump(users, file, indent=4)
 
 
@@ -64,7 +64,7 @@ def get_user_session(user_id: str):
     if not USER_MAP_FILE.exists():
         return None
 
-    with open(USER_MAP_FILE, "r", encoding="utf-8") as file:
+    with open(USER_MAP_FILE, "r", encoding="utf-8-sig") as file:
         users = json.load(file)
 
     return users.get(user_id)
